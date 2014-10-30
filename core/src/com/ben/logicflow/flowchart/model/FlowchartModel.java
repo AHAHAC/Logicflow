@@ -3,7 +3,7 @@ package com.ben.logicflow.flowchart.model;
 import com.ben.logicflow.flowchart.*;
 
 public final class FlowchartModel {
-	private final ProcessModel START_VERTEX = new ProcessModel();
+	private ProcessModel startVertex;
 	private double variableX;
 	private double variableY;
 	private double variableZ;
@@ -16,11 +16,13 @@ public final class FlowchartModel {
 			case IO:
 				symbol = new InputOutputModel();
 		}
-		VertexModel currentVertexModel = START_VERTEX;
-		while (currentVertexModel.getNextVertexModel() != null) {
-			currentVertexModel = currentVertexModel.getNextVertexModel();
+		if (startVertex != null) {
+			VertexModel currentVertexModel = startVertex;
+			while (currentVertexModel.getNextVertexModel() != null) {
+				currentVertexModel = currentVertexModel.getNextVertexModel();
+			}
+			currentVertexModel.setNextVertexModel(symbol);
 		}
-		currentVertexModel.setNextVertexModel(symbol);
 		return symbol;
 	}
 	public void execute() {
@@ -28,7 +30,7 @@ public final class FlowchartModel {
 	public void execute(VertexModel startVertexModel) {
 	}
 	public VertexModel getStartVertex() {
-		return START_VERTEX;
+		return startVertex;
 	}
 	public double getVariable(Variable variable) {
 		switch (variable) {
@@ -40,6 +42,11 @@ public final class FlowchartModel {
 				return variableZ;
 		}
 		return 0;
+	}
+	public VertexModel setStartVertex() {
+		final VertexModel START_VERTEX = addSymbol(SymbolType.PROCESS);
+		startVertex = (ProcessModel) START_VERTEX;
+		return START_VERTEX;
 	}
 	public void setVariable(Variable variable, double value) {
 		switch (variable) {

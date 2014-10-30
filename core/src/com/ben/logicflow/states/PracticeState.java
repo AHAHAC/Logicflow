@@ -22,10 +22,6 @@ public final class PracticeState extends State {
 		FLOWCHART_CONTROLLER.updateEdges();
 	}
 	@Override
-	public void render(float delta) {
-		FLOWCHART_CONTROLLER.updateVertexViews();
-	}
-	@Override
 	public void show() {
 		FLOWCHART_CONTROLLER.setVisible(true);
 	}

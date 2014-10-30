@@ -24,10 +24,7 @@ public final class FlowchartController {
 	private InputDialog inputDialog;
 	private OutputDialog outputDialog;
 	public void initialise() {
-		/*
-		Application.addActor(MODEL.getStartVertex().getView().getImage());
-		Application.addActor(((SymbolView) MODEL.getStartVertex().getView()).getTable());
-		*/
+		addSymbol(SymbolType.PROCESS, 600, 600);
 	}
 	public void updateEdges() {
 		VertexModel currentVertexModel = MODEL.getStartVertex();
@@ -104,8 +101,14 @@ public final class FlowchartController {
 			}
 		});
 		symbolView.setPosition(x, y);
-		VERTEX_VIEW_HASH_MAP.put(symbolView, MODEL.addSymbol(symbolType));
-		VERTEX_MODEL_HASH_MAP.put(MODEL.addSymbol(symbolType), symbolView);
+		VertexModel vertexModel;
+		if (VERTEX_VIEW_HASH_MAP.isEmpty()) {
+			vertexModel = MODEL.setStartVertex();
+		} else {
+			vertexModel = MODEL.addSymbol(symbolType);
+		}
+		VERTEX_VIEW_HASH_MAP.put(symbolView, vertexModel);
+		VERTEX_MODEL_HASH_MAP.put(vertexModel, symbolView);
 		Application.addActor(symbolView.getImage());
 		Application.addActor(symbolView.getTable());
 	}
