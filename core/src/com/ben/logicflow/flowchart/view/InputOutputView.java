@@ -2,7 +2,7 @@ package com.ben.logicflow.flowchart.view;
 
 import com.badlogic.gdx.scenes.scene2d.ui.SelectBox;
 import com.ben.logicflow.Assets;
-import com.ben.logicflow.flowchart.Variable;
+import com.ben.logicflow.flowchart.model.Variable;
 
 public final class InputOutputView extends SymbolView {
 	private final SelectBox<String> OPERATIONS = new SelectBox<String>(Assets.getSkin());

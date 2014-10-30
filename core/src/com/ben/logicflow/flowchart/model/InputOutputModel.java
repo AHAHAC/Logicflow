@@ -1,13 +1,9 @@
-package com.ben.logicflow.flowchart;
-
-import com.ben.logicflow.flowchart.view.InputOutputView;
+package com.ben.logicflow.flowchart.model;
 
 public final class InputOutputModel extends VertexModel implements ISymbol {
-	public InputOutputModel() {
-	}
 	@Override
 	public VertexModel execute() {
-		InputOutputView inputOutputView = (InputOutputView) getView();
+		/*
 		if (inputOutputView.getOperation().equals("input")) {
 			System.out.println(inputOutputView.getVariable());
 			System.out.println(getNextVertexModel());
@@ -15,6 +11,7 @@ public final class InputOutputModel extends VertexModel implements ISymbol {
 			System.out.println(inputOutputView.getVariable());
 			System.out.println(getNextVertexModel());
 		}
+		*/
 		return getNextVertexModel();
 	}
 }

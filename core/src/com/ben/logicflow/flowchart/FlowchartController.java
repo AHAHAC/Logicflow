@@ -8,6 +8,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.DragListener;
 import com.ben.logicflow.Application;
+import com.ben.logicflow.flowchart.model.FlowchartModel;
+import com.ben.logicflow.flowchart.model.ISymbol;
+import com.ben.logicflow.flowchart.model.Variable;
+import com.ben.logicflow.flowchart.model.VertexModel;
 import com.ben.logicflow.flowchart.view.*;
 
 import java.util.HashMap;
@@ -100,8 +104,8 @@ public final class FlowchartController {
 			}
 		});
 		symbolView.setPosition(x, y);
-		VERTEX_VIEW_HASH_MAP.put(symbolView, MODEL.addSymbol(symbolType, symbolView));
-		VERTEX_MODEL_HASH_MAP.put(MODEL.addSymbol(symbolType, symbolView), symbolView);
+		VERTEX_VIEW_HASH_MAP.put(symbolView, MODEL.addSymbol(symbolType));
+		VERTEX_MODEL_HASH_MAP.put(MODEL.addSymbol(symbolType), symbolView);
 		Application.addActor(symbolView.getImage());
 		Application.addActor(symbolView.getTable());
 	}
@@ -146,7 +150,6 @@ public final class FlowchartController {
 		for (VertexView vertexView : VERTEX_VIEW_HASH_MAP.keySet()) {
 			vertexView.setVisible(visible);
 		}
-		/*
 		if (! visible) {
 			if (outputDialog != null) {
 				outputDialog.hide(null);
@@ -157,6 +160,5 @@ public final class FlowchartController {
 				inputDialog.setActive(false);
 			}
 		}
-		*/
 	}
 }

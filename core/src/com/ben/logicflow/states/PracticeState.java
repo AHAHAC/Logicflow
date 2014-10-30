@@ -1,7 +1,6 @@
 package com.ben.logicflow.states;
 
 import com.ben.logicflow.flowchart.FlowchartController;
-import com.ben.logicflow.flowchart.FlowchartModel;
 import com.ben.logicflow.flowchart.SymbolType;
 
 public final class PracticeState extends State {

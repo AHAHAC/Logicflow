@@ -4,9 +4,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.ben.logicflow.Application;
 import com.ben.logicflow.Assets;
-import com.ben.logicflow.flowchart.FlowchartModel;
-import com.ben.logicflow.flowchart.VertexModel;
-import com.ben.logicflow.flowchart.Variable;
+import com.ben.logicflow.flowchart.model.FlowchartModel;
+import com.ben.logicflow.flowchart.model.VertexModel;
+import com.ben.logicflow.flowchart.model.Variable;
 
 public final class OutputDialog extends Dialog {
 	private FlowchartModel flowchartModel;

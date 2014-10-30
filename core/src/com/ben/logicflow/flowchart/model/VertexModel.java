@@ -1,4 +1,4 @@
-package com.ben.logicflow.flowchart;
+package com.ben.logicflow.flowchart.model;
 
 import com.badlogic.gdx.math.Vector2;
 
@@ -8,10 +8,10 @@ public abstract class VertexModel {
 	public VertexModel getNextVertexModel() {
 		return nextVertexModel;
 	}
-	public void setPosition(float x, float y) {
-		POSITION.set(x, y);
-	}
 	public void setNextVertexModel(VertexModel vertexModel) {
 		nextVertexModel = vertexModel;
+	}
+	public void setPosition(float x, float y) {
+		POSITION.set(x, y);
 	}
 }

@@ -1,31 +1,21 @@
-package com.ben.logicflow.flowchart;
+package com.ben.logicflow.flowchart.model;
 
-import com.ben.logicflow.flowchart.view.ProcessView;
-import com.ben.logicflow.flowchart.view.SymbolView;
-
-import java.util.ArrayList;
+import com.ben.logicflow.flowchart.*;
 
 public final class FlowchartModel {
-	private final ProcessModel START_VERTEX = new ProcessModel(this);
-	//private final ArrayList<VertexModel> VERTICES = new ArrayList<VertexModel>();
+	private final ProcessModel START_VERTEX = new ProcessModel();
 	private double variableX;
 	private double variableY;
 	private double variableZ;
-	public FlowchartModel() {
-		START_VERTEX.setView(new ProcessView());
-		//VERTICES.add(START_VERTEX);
-	}
-	public VertexModel addSymbol(SymbolType symbolType, SymbolView symbolView) {
+	public VertexModel addSymbol(SymbolType symbolType) {
 		VertexModel symbol = null;
 		switch (symbolType) {
 			case PROCESS:
-				symbol = new ProcessModel(this);
+				symbol = new ProcessModel();
 				break;
 			case IO:
 				symbol = new InputOutputModel();
 		}
-		symbol.setView(symbolView);
-		//VERTICES.add(symbol);
 		VertexModel currentVertexModel = START_VERTEX;
 		while (currentVertexModel.getNextVertexModel() != null) {
 			currentVertexModel = currentVertexModel.getNextVertexModel();
