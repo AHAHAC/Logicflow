@@ -2,7 +2,6 @@ package com.ben.logicflow.flowchart.model;
 
 import com.ben.logicflow.flowchart.*;
 
-//TODO refactoring
 public final class FlowchartModel {
 	private ProcessModel startVertex;
 	private double variableX;
@@ -23,11 +22,11 @@ public final class FlowchartModel {
 				symbol = new InputOutputModel(this);
 		}
 		if (startVertex != null) {
-			VertexModel currentVertexModel = startVertex;
-			while (currentVertexModel.getNextVertex() != null) {
-				currentVertexModel = currentVertexModel.getNextVertex();
+			VertexModel currentVertex = startVertex;
+			while (currentVertex.getNextVertex() != null) {
+				currentVertex = currentVertex.getNextVertex();
 			}
-			currentVertexModel.setNextVertex(symbol);
+			currentVertex.setNextVertex(symbol);
 		}
 		return symbol;
 	}
@@ -37,23 +36,18 @@ public final class FlowchartModel {
 		variableZ = 0;
 		execute(startVertex);
 	}
-	public void execute(VertexModel startVertexModel) {
-		VertexModel currentVertex = startVertexModel;
+	public void execute(VertexModel startVertex) {
+		VertexModel currentVertex = startVertex;
 		while (currentVertex != null) {
-			/*
-			if ((outputDialog != null && outputDialog.isActive()) || (inputDialog != null && inputDialog.isActive())) {
-				break;
-			}
-			*/
 			if (currentVertex instanceof SymbolModel) {
 				currentVertex = ((SymbolModel) currentVertex).execute();
 			} else {
 				currentVertex = currentVertex.getNextVertex();
 			}
 		}
-		System.out.println(variableX);
-		System.out.println(variableY);
-		System.out.println(variableZ);
+		System.out.println("X: " + variableX);
+		System.out.println("Y: " + variableY);
+		System.out.println("Z: " + variableZ);
 	}
 	public VertexModel getStartVertex() {
 		return startVertex;
