@@ -32,8 +32,28 @@ public final class FlowchartModel {
 		return symbol;
 	}
 	public void execute() {
+		variableX = 0;
+		variableY = 0;
+		variableZ = 0;
+		execute(startVertex);
 	}
 	public void execute(VertexModel startVertexModel) {
+		VertexModel currentVertex = startVertexModel;
+		while (currentVertex != null) {
+			/*
+			if ((outputDialog != null && outputDialog.isActive()) || (inputDialog != null && inputDialog.isActive())) {
+				break;
+			}
+			*/
+			if (currentVertex instanceof SymbolModel) {
+				currentVertex = ((SymbolModel) currentVertex).execute();
+			} else {
+				currentVertex = currentVertex.getNextVertex();
+			}
+		}
+		System.out.println(variableX);
+		System.out.println(variableY);
+		System.out.println(variableZ);
 	}
 	public VertexModel getStartVertex() {
 		return startVertex;

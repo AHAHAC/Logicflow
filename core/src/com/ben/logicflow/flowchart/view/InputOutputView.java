@@ -5,22 +5,22 @@ import com.ben.logicflow.Assets;
 import com.ben.logicflow.flowchart.Variable;
 
 public final class InputOutputView extends SymbolView {
-	private final SelectBox<String> OPERATIONS = new SelectBox<String>(Assets.getSkin());
-	private final SelectBox<String> VARIABLES = new SelectBox<String>(Assets.getSkin());
+	private final SelectBox<String> OPERATION_SELECT_BOX = new SelectBox<String>(Assets.getSkin());
+	private final SelectBox<String> VARIABLES_SELECT_BOX = new SelectBox<String>(Assets.getSkin());
 	public InputOutputView() {
 		super(Assets.getIO());
-		OPERATIONS.setItems("INPUT", "OUTPUT");
-		getTable().add(OPERATIONS).space(10);
-		VARIABLES.setItems("X", "Y", "Z");
-		getTable().add(VARIABLES).space(10);
+		OPERATION_SELECT_BOX.setItems("INPUT", "OUTPUT");
+		getTable().add(OPERATION_SELECT_BOX).space(10);
+		VARIABLES_SELECT_BOX.setItems("X", "Y", "Z");
+		getTable().add(VARIABLES_SELECT_BOX).space(10);
 	}
-	public String getOperation() {
-		return OPERATIONS.getSelected();
+	public String getCurrentOperation() {
+		return OPERATION_SELECT_BOX.getSelected();
 	}
-	public Variable getVariable() {
-		if (VARIABLES.getSelected().equals("X")) {
+	public Variable getCurrentVariable() {
+		if (VARIABLES_SELECT_BOX.getSelected().equals("X")) {
 			return Variable.X;
-		} else if (VARIABLES.getSelected().equals("Y")) {
+		} else if (VARIABLES_SELECT_BOX.getSelected().equals("Y")) {
 			return Variable.Y;
 		} else {
 			return Variable.Z;

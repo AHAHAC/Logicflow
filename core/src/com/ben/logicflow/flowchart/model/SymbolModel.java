@@ -1,8 +1,8 @@
 package com.ben.logicflow.flowchart.model;
 
-public abstract class Symbol extends VertexModel {
+public abstract class SymbolModel extends VertexModel {
 	private FlowchartModel flowchartModel;
-	public Symbol(FlowchartModel flowchartModel) {
+	public SymbolModel(FlowchartModel flowchartModel) {
 		this.flowchartModel = flowchartModel;
 	}
 	public abstract VertexModel execute();

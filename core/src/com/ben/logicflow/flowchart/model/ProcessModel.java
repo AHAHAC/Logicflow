@@ -2,16 +2,17 @@ package com.ben.logicflow.flowchart.model;
 
 import com.ben.logicflow.flowchart.Variable;
 
-public final class ProcessModel extends Symbol {
-	private Variable variable;
-	private String operation;
+public final class ProcessModel extends SymbolModel {
+	private boolean active;
+	private Variable variable = Variable.X;
+	private String operation = "=";
 	private int value;
 	public ProcessModel(FlowchartModel flowchartModel) {
 		super(flowchartModel);
 	}
 	@Override
 	public VertexModel execute() {
-		try {
+		if (active) {
 			if (operation.equals("=")) {
 				getFlowchartModel().setVariable(variable, value);
 			} else if (operation.equals("+=")) {
@@ -23,9 +24,11 @@ public final class ProcessModel extends Symbol {
 			} else if (operation.equals("/=")) {
 				getFlowchartModel().setVariable(variable, getFlowchartModel().getVariable(variable) / value);
 			}
-		} catch (NumberFormatException ignored) {
 		}
 		return getNextVertex();
+	}
+	public void setActive(boolean active) {
+		this.active = active;
 	}
 	public void setVariable(Variable variable) {
 		this.variable = variable;

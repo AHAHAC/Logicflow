@@ -6,10 +6,12 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.TextField;
+import com.badlogic.gdx.scenes.scene2d.ui.TextField.TextFieldListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.DragListener;
 import com.ben.logicflow.flowchart.model.FlowchartModel;
-import com.ben.logicflow.flowchart.model.Symbol;
+import com.ben.logicflow.flowchart.model.SymbolModel;
 import com.ben.logicflow.flowchart.model.ProcessModel;
 import com.ben.logicflow.flowchart.model.VertexModel;
 import com.ben.logicflow.flowchart.view.*;
@@ -32,15 +34,12 @@ public final class FlowchartController {
 		EDGE_RENDERER.begin(ShapeRenderer.ShapeType.Line);
 		EDGE_RENDERER.setColor(1, 1, 1, 1);
 		while (currentVertexModel.getNextVertex() != null) {
-			if (currentVertexModel instanceof Symbol) {
+			if (currentVertexModel instanceof SymbolModel) {
 				updateEdge(((SymbolView) getView(currentVertexModel)).getOutPoint(), getView(currentVertexModel.getNextVertex()).getInPoint());
 			}
 			currentVertexModel = currentVertexModel.getNextVertex();
 		}
 		EDGE_RENDERER.end();
-	}
-	private VertexView getView(VertexModel vertexModel) {
-		return VERTEX_MODEL_HASH_MAP.get(vertexModel);
 	}
 	private void updateEdge(Vector2 startPoint, Vector2 endPoint) {
 		/*
@@ -65,6 +64,9 @@ public final class FlowchartController {
 		switch (symbolType) {
 			case PROCESS:
 				symbolView = new ProcessView();
+				((ProcessView) symbolView).getVariableSelectBox().addListener(new SelectBoxStateListener(symbolView));
+				((ProcessView) symbolView).getOperationSelectBox().addListener(new SelectBoxStateListener(symbolView));
+				((ProcessView) symbolView).getValueTextField().setTextFieldListener(new TextFieldStateListener(symbolView));
 				break;
 			case IO:
 				symbolView = new InputOutputView();
@@ -81,42 +83,18 @@ public final class FlowchartController {
 		VERTEX_VIEW_HASH_MAP.put(symbolView, vertexModel);
 		VERTEX_MODEL_HASH_MAP.put(vertexModel, symbolView);
 	}
-	private void vertexMoved(VertexView view, float x, float y) {
-	}
 	public void execute() {
-		/*
-		variableX = 0;
-		variableY = 0;
-		variableZ = 0;
-		execute(START_VERTEX);
-		*/
-		/*
-		Vertex currentVertex = startVertex;
-		while (currentVertex != null) {
-			if ((outputDialog != null && outputDialog.isActive()) || (inputDialog != null && inputDialog.isActive())) {
-				break;
-			}
-			if (currentVertex instanceof Symbol) {
-				currentVertex = ((Symbol) currentVertex).execute();
-			} else {
-				currentVertex = currentVertex.getNextVertex();
-			}
-		}
-		*/
+		MODEL.execute();
 	}
 	public void execute(VertexModel startVertexModel) {
+		MODEL.execute(startVertexModel);
 	}
 	public void input(Variable variable, VertexModel nextVertexModel) {
-		/*
-		inputDialog = new InputDialog(this);
-		inputDialog.input(variable, nextVertex);
-		*/
 	}
 	public void output(Variable variable, VertexModel nextVertexModel) {
-		/*
-		outputDialog = new OutputDialog(this);
-		outputDialog.output(variable, nextVertex);
-		*/
+	}
+	private VertexView getView(VertexModel vertexModel) {
+		return VERTEX_MODEL_HASH_MAP.get(vertexModel);
 	}
 	public void setVisible(boolean visible) {
 		for (VertexView vertexView : VERTEX_VIEW_HASH_MAP.keySet()) {
@@ -164,17 +142,31 @@ public final class FlowchartController {
 			VERTEX_VIEW_HASH_MAP.get(vertexView).setPosition(vertexView.getX(), vertexView.getY());
 		}
 	}
-	private final class StateListener extends ChangeListener {
+	private final class SelectBoxStateListener extends ChangeListener {
 		private SymbolView symbolView;
-		public StateListener(SymbolView symbolView) {
+		public SelectBoxStateListener(SymbolView symbolView) {
 			this.symbolView = symbolView;
 		}
 		@Override
 		public void changed(ChangeEvent event, Actor actor) {
 			if (symbolView instanceof ProcessView) {
-				((ProcessModel) VERTEX_VIEW_HASH_MAP.get(symbolView)).setVariable(((ProcessView) symbolView).getVariable());
-				((ProcessModel) VERTEX_VIEW_HASH_MAP.get(symbolView)).setOperation(((ProcessView) symbolView).getOperation());
-				((ProcessModel) VERTEX_VIEW_HASH_MAP.get(symbolView)).setValue(((ProcessView) symbolView).getValue());
+				((ProcessModel) VERTEX_VIEW_HASH_MAP.get(symbolView)).setVariable(((ProcessView) symbolView).getCurrentVariable());
+				((ProcessModel) VERTEX_VIEW_HASH_MAP.get(symbolView)).setOperation(((ProcessView) symbolView).getCurrentOperation());
+			}
+		}
+	}
+	private final class TextFieldStateListener implements TextFieldListener {
+		private SymbolView symbolView;
+		public TextFieldStateListener(SymbolView symbolView) {
+			this.symbolView = symbolView;
+		}
+		@Override
+		public void keyTyped(TextField textField, char c) {
+			try {
+				((ProcessModel) VERTEX_VIEW_HASH_MAP.get(symbolView)).setValue(Integer.parseInt(((ProcessView) symbolView).getCurrentValue()));
+				((ProcessModel) VERTEX_VIEW_HASH_MAP.get(symbolView)).setActive(true);
+			} catch (NumberFormatException e) {
+				((ProcessModel) VERTEX_VIEW_HASH_MAP.get(symbolView)).setActive(false);
 			}
 		}
 	}
