@@ -3,11 +3,14 @@ package com.ben.logicflow.flowchart;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.DragListener;
 import com.ben.logicflow.flowchart.model.FlowchartModel;
-import com.ben.logicflow.flowchart.model.ISymbol;
+import com.ben.logicflow.flowchart.model.Symbol;
+import com.ben.logicflow.flowchart.model.ProcessModel;
 import com.ben.logicflow.flowchart.model.VertexModel;
 import com.ben.logicflow.flowchart.view.*;
 
@@ -29,7 +32,7 @@ public final class FlowchartController {
 		EDGE_RENDERER.begin(ShapeRenderer.ShapeType.Line);
 		EDGE_RENDERER.setColor(1, 1, 1, 1);
 		while (currentVertexModel.getNextVertex() != null) {
-			if (currentVertexModel instanceof ISymbol) {
+			if (currentVertexModel instanceof Symbol) {
 				updateEdge(((SymbolView) getView(currentVertexModel)).getOutPoint(), getView(currentVertexModel.getNextVertex()).getInPoint());
 			}
 			currentVertexModel = currentVertexModel.getNextVertex();
@@ -159,6 +162,20 @@ public final class FlowchartController {
 			}
 			vertexView.moved();
 			VERTEX_VIEW_HASH_MAP.get(vertexView).setPosition(vertexView.getX(), vertexView.getY());
+		}
+	}
+	private final class StateListener extends ChangeListener {
+		private SymbolView symbolView;
+		public StateListener(SymbolView symbolView) {
+			this.symbolView = symbolView;
+		}
+		@Override
+		public void changed(ChangeEvent event, Actor actor) {
+			if (symbolView instanceof ProcessView) {
+				((ProcessModel) VERTEX_VIEW_HASH_MAP.get(symbolView)).setVariable(((ProcessView) symbolView).getVariable());
+				((ProcessModel) VERTEX_VIEW_HASH_MAP.get(symbolView)).setOperation(((ProcessView) symbolView).getOperation());
+				((ProcessModel) VERTEX_VIEW_HASH_MAP.get(symbolView)).setValue(((ProcessView) symbolView).getValue());
+			}
 		}
 	}
 }

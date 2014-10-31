@@ -1,10 +1,9 @@
 package com.ben.logicflow.states;
 
-import com.badlogic.gdx.ScreenAdapter;
 import com.ben.logicflow.flowchart.FlowchartController;
 import com.ben.logicflow.flowchart.SymbolType;
 
-public final class PracticeState extends ScreenAdapter {
+public final class PracticeState extends FlowchartState {
 	private static final FlowchartController FLOWCHART_CONTROLLER = new FlowchartController();
 	protected static void initialise() {
 		FLOWCHART_CONTROLLER.initialise();

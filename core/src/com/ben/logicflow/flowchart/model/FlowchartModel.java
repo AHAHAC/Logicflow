@@ -17,10 +17,10 @@ public final class FlowchartModel {
 		VertexModel symbol = null;
 		switch (symbolType) {
 			case PROCESS:
-				symbol = new ProcessModel();
+				symbol = new ProcessModel(this);
 				break;
 			case IO:
-				symbol = new InputOutputModel();
+				symbol = new InputOutputModel(this);
 		}
 		if (startVertex != null) {
 			VertexModel currentVertexModel = startVertex;
