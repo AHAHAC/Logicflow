@@ -2,6 +2,7 @@ package com.ben.logicflow.flowchart.model;
 
 import com.ben.logicflow.flowchart.*;
 
+//TODO refactoring
 public final class FlowchartModel {
 	private ProcessModel startVertex;
 	private double variableX;
@@ -23,10 +24,10 @@ public final class FlowchartModel {
 		}
 		if (startVertex != null) {
 			VertexModel currentVertexModel = startVertex;
-			while (currentVertexModel.getNextVertexModel() != null) {
-				currentVertexModel = currentVertexModel.getNextVertexModel();
+			while (currentVertexModel.getNextVertex() != null) {
+				currentVertexModel = currentVertexModel.getNextVertex();
 			}
-			currentVertexModel.setNextVertexModel(symbol);
+			currentVertexModel.setNextVertex(symbol);
 		}
 		return symbol;
 	}

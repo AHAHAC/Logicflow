@@ -5,17 +5,15 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.DragListener;
-import com.ben.logicflow.Application;
 import com.ben.logicflow.flowchart.model.FlowchartModel;
 import com.ben.logicflow.flowchart.model.ISymbol;
-import com.ben.logicflow.flowchart.model.Variable;
 import com.ben.logicflow.flowchart.model.VertexModel;
 import com.ben.logicflow.flowchart.view.*;
 
 import java.util.HashMap;
 
+//TODO refactoring
 public final class FlowchartController {
 	private final FlowchartModel MODEL = new FlowchartModel();
 	private final ShapeRenderer EDGE_RENDERER = new ShapeRenderer();
@@ -30,11 +28,11 @@ public final class FlowchartController {
 		VertexModel currentVertexModel = MODEL.getStartVertex();
 		EDGE_RENDERER.begin(ShapeRenderer.ShapeType.Line);
 		EDGE_RENDERER.setColor(1, 1, 1, 1);
-		while (currentVertexModel.getNextVertexModel() != null) {
+		while (currentVertexModel.getNextVertex() != null) {
 			if (currentVertexModel instanceof ISymbol) {
-				updateEdge(((SymbolView) getView(currentVertexModel)).getOutPoint(), getView(currentVertexModel.getNextVertexModel()).getInPoint());
+				updateEdge(((SymbolView) getView(currentVertexModel)).getOutPoint(), getView(currentVertexModel.getNextVertex()).getInPoint());
 			}
-			currentVertexModel = currentVertexModel.getNextVertexModel();
+			currentVertexModel = currentVertexModel.getNextVertex();
 		}
 		EDGE_RENDERER.end();
 	}
@@ -44,7 +42,7 @@ public final class FlowchartController {
 	private void updateEdge(Vector2 startPoint, Vector2 endPoint) {
 		/*
 		SymbolView currentSymbolView = (SymbolView) currentVertexModel.getView();
-		VertexView nextVertexView = currentVertexModel.getNextVertexModel().getView();
+		VertexView nextVertexView = currentVertexModel.getNextVertex().getView();
 		final int MINIMUM_DISTANCE = 12;
 		if (currentSymbolView.getOutPoint().y - nextVertexView.getInPoint().y < 2 * MINIMUM_DISTANCE) {
 			EDGE_RENDERER.line(currentSymbolView.getOutPoint().x, currentSymbolView.getOutPoint().y, currentSymbolView.getOutPoint().x, currentSymbolView.getOutPoint().y - MINIMUM_DISTANCE);
@@ -68,39 +66,9 @@ public final class FlowchartController {
 			case IO:
 				symbolView = new InputOutputView();
 		}
-		final SymbolView SYMBOL_VIEW_TEMP = symbolView;
-		SYMBOL_VIEW_TEMP.getImage().addListener(new DragListener() {
-			private float dX;
-			private float dY;
-			private final Image IMAGE = SYMBOL_VIEW_TEMP.getImage();
-			private final Table TABLE = SYMBOL_VIEW_TEMP.getTable();
-			private final Vector2 IN_POINT = SYMBOL_VIEW_TEMP.getInPoint();
-			private final Vector2 OUT_POINT = SYMBOL_VIEW_TEMP.getOutPoint();
-			@Override
-			public void dragStart(InputEvent event, float x, float y, int pointer) {
-				dX = Gdx.input.getX() - IMAGE.getX();
-				dY = -Gdx.input.getY() + Gdx.graphics.getHeight() - IMAGE.getY();
-			}
-			@Override
-			public void drag(InputEvent event, float x, float y, int pointer) {
-				IMAGE.setPosition(IMAGE.getX() + x - dX, IMAGE.getY() + y - dY);
-				if (IMAGE.getX() < 0) {
-					IMAGE.setX(0);
-				} else if (IMAGE.getX() > Gdx.graphics.getWidth() - IMAGE.getWidth()) {
-					IMAGE.setX(Gdx.graphics.getWidth() - IMAGE.getWidth());
-				}
-				if (IMAGE.getY() < 0) {
-					IMAGE.setY(0);
-				} else if (IMAGE.getY() > Gdx.graphics.getHeight() - IMAGE.getHeight()) {
-					IMAGE.setY(Gdx.graphics.getHeight() - IMAGE.getHeight());
-				}
-				IN_POINT.set(IMAGE.getX() + (IMAGE.getWidth() / 2), IMAGE.getY() + IMAGE.getHeight());
-				TABLE.setPosition(IMAGE.getX() + (IMAGE.getWidth() / 2), IMAGE.getY() + (IMAGE.getHeight() / 2));
-				OUT_POINT.set(IMAGE.getX() + (IMAGE.getWidth() / 2), IMAGE.getY());
-				VERTEX_VIEW_HASH_MAP.get(SYMBOL_VIEW_TEMP).setPosition(IMAGE.getX(), IMAGE.getY());
-			}
-		});
+		symbolView.getImage().addListener(new DragAndDropListener(symbolView));
 		symbolView.setPosition(x, y);
+		symbolView.moved();
 		VertexModel vertexModel;
 		if (VERTEX_VIEW_HASH_MAP.isEmpty()) {
 			vertexModel = MODEL.addStartVertex();
@@ -109,8 +77,6 @@ public final class FlowchartController {
 		}
 		VERTEX_VIEW_HASH_MAP.put(symbolView, vertexModel);
 		VERTEX_MODEL_HASH_MAP.put(vertexModel, symbolView);
-		Application.addActor(symbolView.getImage());
-		Application.addActor(symbolView.getTable());
 	}
 	private void vertexMoved(VertexView view, float x, float y) {
 	}
@@ -162,6 +128,37 @@ public final class FlowchartController {
 				inputDialog.hide(null);
 				inputDialog.setActive(false);
 			}
+		}
+	}
+	private final class DragAndDropListener extends DragListener {
+		private VertexView vertexView;
+		private Image image;
+		private float dX;
+		private float dY;
+		public DragAndDropListener(VertexView vertexView) {
+			this.vertexView = vertexView;
+			image = vertexView.getImage();
+		}
+		@Override
+		public void dragStart(InputEvent event, float x, float y, int pointer) {
+			dX = Gdx.input.getX() - image.getX();
+			dY = -Gdx.input.getY() + Gdx.graphics.getHeight() - image.getY();
+		}
+		@Override
+		public void drag(InputEvent event, float x, float y, int pointer) {
+			image.setPosition(image.getX() + x - dX, image.getY() + y - dY);
+			if (image.getX() < 0) {
+				image.setX(0);
+			} else if (image.getX() > Gdx.graphics.getWidth() - image.getWidth()) {
+				image.setX(Gdx.graphics.getWidth() - image.getWidth());
+			}
+			if (image.getY() < 0) {
+				image.setY(0);
+			} else if (image.getY() > Gdx.graphics.getHeight() - image.getHeight()) {
+				image.setY(Gdx.graphics.getHeight() - image.getHeight());
+			}
+			vertexView.moved();
+			VERTEX_VIEW_HASH_MAP.get(vertexView).setPosition(vertexView.getX(), vertexView.getY());
 		}
 	}
 }

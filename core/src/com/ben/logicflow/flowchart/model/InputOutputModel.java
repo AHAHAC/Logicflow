@@ -6,12 +6,12 @@ public final class InputOutputModel extends VertexModel implements ISymbol {
 		/*
 		if (inputOutputView.getOperation().equals("input")) {
 			System.out.println(inputOutputView.getVariable());
-			System.out.println(getNextVertexModel());
+			System.out.println(getNextVertex());
 		} else {
 			System.out.println(inputOutputView.getVariable());
-			System.out.println(getNextVertexModel());
+			System.out.println(getNextVertex());
 		}
 		*/
-		return getNextVertexModel();
+		return getNextVertex();
 	}
 }

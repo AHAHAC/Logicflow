@@ -6,8 +6,9 @@ import com.ben.logicflow.Application;
 import com.ben.logicflow.Assets;
 import com.ben.logicflow.flowchart.model.FlowchartModel;
 import com.ben.logicflow.flowchart.model.VertexModel;
-import com.ben.logicflow.flowchart.model.Variable;
+import com.ben.logicflow.flowchart.Variable;
 
+//TODO refactoring
 public final class OutputDialog extends Dialog {
 	private FlowchartModel flowchartModel;
 	private VertexModel nextVertexModel;

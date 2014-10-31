@@ -5,9 +5,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.ben.logicflow.Application;
 import com.ben.logicflow.Assets;
 import com.ben.logicflow.flowchart.model.FlowchartModel;
-import com.ben.logicflow.flowchart.model.Variable;
+import com.ben.logicflow.flowchart.Variable;
 import com.ben.logicflow.flowchart.model.VertexModel;
 
+//TODO refactoring
 public final class InputDialog extends Dialog {
 	private FlowchartModel flowchartModel;
 	private Variable variable;

@@ -3,7 +3,7 @@ package com.ben.logicflow.flowchart.view;
 import com.badlogic.gdx.scenes.scene2d.ui.SelectBox;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.ben.logicflow.Assets;
-import com.ben.logicflow.flowchart.model.Variable;
+import com.ben.logicflow.flowchart.Variable;
 
 public final class ProcessView extends SymbolView {
 	private final SelectBox<String> VARIABLES = new SelectBox<String>(Assets.getSkin());

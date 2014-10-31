@@ -19,6 +19,6 @@ public final class ProcessModel extends VertexModel implements ISymbol {
 		} catch (NumberFormatException ignored) {
 		}
 		*/
-		return getNextVertexModel();
+		return getNextVertex();
 	}
 }
