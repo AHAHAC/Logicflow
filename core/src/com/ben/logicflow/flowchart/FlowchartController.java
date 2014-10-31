@@ -10,6 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField.TextFieldListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.DragListener;
+import com.ben.logicflow.Assets;
 import com.ben.logicflow.flowchart.model.*;
 import com.ben.logicflow.flowchart.view.*;
 
@@ -23,7 +24,7 @@ public final class FlowchartController {
 	private InputDialog inputDialog;
 	private OutputDialog outputDialog;
 	public void initialise() {
-		addSymbol(SymbolType.PROCESS, 450, 600);
+		addSymbol(SymbolType.PROCESS, (Gdx.graphics.getWidth() / 2) - (Assets.getProcess().getRegionWidth() / 2), 675);
 	}
 	public void checkStatus() {
 		switch (MODEL.getRequestType()) {
@@ -52,22 +53,18 @@ public final class FlowchartController {
 		EDGE_RENDERER.end();
 	}
 	private void drawEdge(Vector2 startPoint, Vector2 endPoint) {
-		/*
-		SymbolView currentSymbolView = (SymbolView) currentVertexModel.getView();
-		VertexView nextVertexView = currentVertexModel.getRequestVertex().getView();
 		final int MINIMUM_DISTANCE = 12;
-		if (currentSymbolView.getOutPoint().y - nextVertexView.getInPoint().y < 2 * MINIMUM_DISTANCE) {
-			EDGE_RENDERER.line(currentSymbolView.getOutPoint().x, currentSymbolView.getOutPoint().y, currentSymbolView.getOutPoint().x, currentSymbolView.getOutPoint().y - MINIMUM_DISTANCE);
-			EDGE_RENDERER.line(currentSymbolView.getOutPoint().x, currentSymbolView.getOutPoint().y - MINIMUM_DISTANCE, (currentSymbolView.getOutPoint().x + nextVertexView.getInPoint().x) / 2, currentSymbolView.getOutPoint().y - MINIMUM_DISTANCE);
-			EDGE_RENDERER.line((currentSymbolView.getOutPoint().x + nextVertexView.getInPoint().x) / 2, currentSymbolView.getOutPoint().y - MINIMUM_DISTANCE, (currentSymbolView.getOutPoint().x + nextVertexView.getInPoint().x) / 2, nextVertexView.getInPoint().y + MINIMUM_DISTANCE);
-			EDGE_RENDERER.line((currentSymbolView.getOutPoint().x + nextVertexView.getInPoint().x) / 2, nextVertexView.getInPoint().y + MINIMUM_DISTANCE, nextVertexView.getInPoint().x, nextVertexView.getInPoint().y + MINIMUM_DISTANCE);
-			EDGE_RENDERER.line(nextVertexView.getInPoint().x, nextVertexView.getInPoint().y + MINIMUM_DISTANCE, nextVertexView.getInPoint().x, nextVertexView.getInPoint().y);
+		if (startPoint.y - endPoint.y < 2 * MINIMUM_DISTANCE) {
+			EDGE_RENDERER.line(startPoint.x, startPoint.y, startPoint.x, startPoint.y - MINIMUM_DISTANCE);
+			EDGE_RENDERER.line(startPoint.x, startPoint.y - MINIMUM_DISTANCE, (startPoint.x + endPoint.x) / 2, startPoint.y - MINIMUM_DISTANCE);
+			EDGE_RENDERER.line((startPoint.x + endPoint.x) / 2, startPoint.y - MINIMUM_DISTANCE, (startPoint.x + endPoint.x) / 2, endPoint.y + MINIMUM_DISTANCE);
+			EDGE_RENDERER.line((startPoint.x + endPoint.x) / 2, endPoint.y + MINIMUM_DISTANCE, endPoint.x, endPoint.y + MINIMUM_DISTANCE);
+			EDGE_RENDERER.line(endPoint.x, endPoint.y + MINIMUM_DISTANCE, endPoint.x, endPoint.y);
 		} else {
-			EDGE_RENDERER.line(currentSymbolView.getOutPoint().x, currentSymbolView.getOutPoint().y, currentSymbolView.getOutPoint().x, (currentSymbolView.getOutPoint().y + nextVertexView.getInPoint().y) / 2);
-			EDGE_RENDERER.line(currentSymbolView.getOutPoint().x, (currentSymbolView.getOutPoint().y + nextVertexView.getInPoint().y) / 2, nextVertexView.getInPoint().x, (currentSymbolView.getOutPoint().y + nextVertexView.getInPoint().y) / 2);
-			EDGE_RENDERER.line(nextVertexView.getInPoint().x, (currentSymbolView.getOutPoint().y + nextVertexView.getInPoint().y) / 2, nextVertexView.getInPoint().x, nextVertexView.getInPoint().y);
+			EDGE_RENDERER.line(startPoint.x, startPoint.y, startPoint.x, (startPoint.y + endPoint.y) / 2);
+			EDGE_RENDERER.line(startPoint.x, (startPoint.y + endPoint.y) / 2, endPoint.x, (startPoint.y + endPoint.y) / 2);
+			EDGE_RENDERER.line(endPoint.x, (startPoint.y + endPoint.y) / 2, endPoint.x, endPoint.y);
 		}
-		*/
 	}
 	public void addSymbol(SymbolType symbolType, float x, float y) {
 		SymbolView symbolView = null;

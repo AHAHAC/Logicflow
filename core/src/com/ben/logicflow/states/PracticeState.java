@@ -1,5 +1,7 @@
 package com.ben.logicflow.states;
 
+import com.badlogic.gdx.Gdx;
+import com.ben.logicflow.Assets;
 import com.ben.logicflow.flowchart.FlowchartController;
 import com.ben.logicflow.flowchart.SymbolType;
 
@@ -7,11 +9,11 @@ public final class PracticeState extends FlowchartState {
 	private static final FlowchartController FLOWCHART_CONTROLLER = new FlowchartController();
 	protected static void initialise() {
 		FLOWCHART_CONTROLLER.initialise();
-		FLOWCHART_CONTROLLER.addSymbol(SymbolType.PROCESS, 450, 500);
-		FLOWCHART_CONTROLLER.addSymbol(SymbolType.IO, 450, 400);
-		FLOWCHART_CONTROLLER.addSymbol(SymbolType.PROCESS, 450, 300);
-		FLOWCHART_CONTROLLER.addSymbol(SymbolType.PROCESS, 450, 200);
-		FLOWCHART_CONTROLLER.addSymbol(SymbolType.IO, 450, 100);
+		FLOWCHART_CONTROLLER.addSymbol(SymbolType.PROCESS, (Gdx.graphics.getWidth() / 2) - (Assets.getProcess().getRegionWidth() / 2), 575);
+		FLOWCHART_CONTROLLER.addSymbol(SymbolType.IO, (Gdx.graphics.getWidth() / 2) - (Assets.getIO().getRegionWidth() / 2), 475);
+		FLOWCHART_CONTROLLER.addSymbol(SymbolType.PROCESS, (Gdx.graphics.getWidth() / 2) - (Assets.getProcess().getRegionWidth() / 2), 375);
+		FLOWCHART_CONTROLLER.addSymbol(SymbolType.PROCESS, (Gdx.graphics.getWidth() / 2) - (Assets.getProcess().getRegionWidth() / 2), 275);
+		FLOWCHART_CONTROLLER.addSymbol(SymbolType.IO, (Gdx.graphics.getWidth() / 2) - (Assets.getIO().getRegionWidth() / 2), 175);
 		FLOWCHART_CONTROLLER.setVisible(false);
 	}
 	@Override
