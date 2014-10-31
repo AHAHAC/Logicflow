@@ -6,6 +6,6 @@ public final class InputOutputModel extends SymbolModel {
 	}
 	@Override
 	public VertexModel execute() {
-		return getNextVertex();
+		return null;
 	}
 }

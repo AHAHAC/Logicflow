@@ -4,49 +4,30 @@ import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.ben.logicflow.Application;
 import com.ben.logicflow.Assets;
-import com.ben.logicflow.flowchart.model.FlowchartModel;
+import com.ben.logicflow.flowchart.FlowchartController;
 import com.ben.logicflow.flowchart.model.VertexModel;
 import com.ben.logicflow.flowchart.Variable;
 
-//TODO refactoring
 public final class OutputDialog extends Dialog {
-	private FlowchartModel flowchartModel;
-	private VertexModel nextVertexModel;
-	private boolean active;
 	private final Label OUTPUT_LABEL = new Label("", Assets.getSkin());
-	public OutputDialog(FlowchartModel flowchartModel) {
+	private FlowchartController flowchartController;
+	private VertexModel nextVertex;
+	public OutputDialog(FlowchartController flowchartController) {
 		super("OUTPUT", Assets.getSkin());
-		this.flowchartModel = flowchartModel;
+		this.flowchartController = flowchartController;
 		setMovable(false);
 		getContentTable().add(OUTPUT_LABEL);
 		button("Ok");
 	}
-	public void output(Variable variable, VertexModel nextVertexModel) {
-		switch (variable) {
-			case X:
-				OUTPUT_LABEL.setText(String.valueOf(flowchartModel.getVariable(Variable.X)));
-				break;
-			case Y:
-				OUTPUT_LABEL.setText(String.valueOf(flowchartModel.getVariable(Variable.Y)));
-				break;
-			case Z:
-				OUTPUT_LABEL.setText(String.valueOf(flowchartModel.getVariable(Variable.Z)));
-		}
-		this.nextVertexModel = nextVertexModel;
+	public void output(Variable variable, VertexModel nextVertex) {
+		OUTPUT_LABEL.setText(String.valueOf(flowchartController.getVariable(variable)));
+		this.nextVertex = nextVertex;
 		show(Application.getStage());
-		active = true;
 	}
 	@Override
 	protected void result(Object object) {
-		active = false;
-		if (nextVertexModel != null) {
-			flowchartModel.execute(nextVertexModel);
+		if (nextVertex != null) {
+			flowchartController.execute(nextVertex);
 		}
-	}
-	public void setActive(boolean active) {
-		this.active = active;
-	}
-	public boolean isActive() {
-		return active;
 	}
 }

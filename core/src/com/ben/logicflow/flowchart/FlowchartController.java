@@ -89,11 +89,21 @@ public final class FlowchartController {
 		MODEL.execute(startVertex);
 	}
 	public void input(Variable variable, VertexModel nextVertex) {
+		inputDialog = new InputDialog(this);
+		inputDialog.input(variable, nextVertex);
 	}
 	public void output(Variable variable, VertexModel nextVertex) {
+		outputDialog = new OutputDialog(this);
+		outputDialog.output(variable, nextVertex);
+	}
+	public double getVariable(Variable variable) {
+		return MODEL.getVariable(variable);
 	}
 	private VertexView getView(VertexModel vertexModel) {
 		return VERTEX_MODEL_HASH_MAP.get(vertexModel);
+	}
+	public void setVariable(Variable variable, int value) {
+		MODEL.setVariable(variable, value);
 	}
 	public void setVisible(boolean visible) {
 		for (VertexView vertexView : VERTEX_VIEW_HASH_MAP.keySet()) {
@@ -102,11 +112,9 @@ public final class FlowchartController {
 		if (! visible) {
 			if (outputDialog != null) {
 				outputDialog.hide(null);
-				outputDialog.setActive(false);
 			}
 			if (inputDialog != null) {
 				inputDialog.hide(null);
-				inputDialog.setActive(false);
 			}
 		}
 	}
