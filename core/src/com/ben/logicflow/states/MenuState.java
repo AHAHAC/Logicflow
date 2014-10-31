@@ -20,7 +20,7 @@ public final class MenuState extends ScreenAdapter {
 	protected static void initialise() {
 		TABLE.setFillParent(true);
 		Application.addActor(TABLE);
-		TABLE.add(TITLE_LABEL).width(180).space(10).left().row();
+		TABLE.add(TITLE_LABEL).width(150).space(10).left().row();
 		LEARN_BUTTON.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent inputEvent, float x, float y) {
