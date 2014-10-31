@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.ben.logicflow.states.PracticeState;
 import com.ben.logicflow.states.State;
 import com.ben.logicflow.states.StateManager;
@@ -20,6 +21,13 @@ public final class Application extends ApplicationAdapter {
 		StateManager.initialise();
 		stage.addListener(new InputListener() {
 			@Override
+			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+				if (! (event.getTarget() instanceof TextField)) {
+					stage.setKeyboardFocus(null);
+				}
+				return false;
+			}
+			@Override
 			public boolean keyDown(InputEvent event, int keycode) {
 				if (keycode == Keys.F10 && StateManager.getCurrentState() == State.PRACTICE_STATE) {
 					PracticeState.executeFlowchart();
@@ -27,7 +35,7 @@ public final class Application extends ApplicationAdapter {
 				if (keycode == Keys.ESCAPE && StateManager.getCurrentState() == State.PRACTICE_STATE) {
 					StateManager.setState(State.MENU_STATE);
 				}
-				return true;
+				return false;
 			}
 		});
 		Gdx.input.setInputProcessor(stage);
