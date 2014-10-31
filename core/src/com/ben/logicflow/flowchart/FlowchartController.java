@@ -24,7 +24,7 @@ public final class FlowchartController {
 	private InputDialog inputDialog;
 	private OutputDialog outputDialog;
 	public void initialise() {
-		addSymbol(SymbolType.PROCESS, 600, 600);
+		addSymbol(SymbolType.PROCESS, 450, 600);
 	}
 	public void updateEdges() {
 		VertexModel currentVertexModel = MODEL.getStartVertex();
@@ -103,7 +103,7 @@ public final class FlowchartController {
 		symbolView.setPosition(x, y);
 		VertexModel vertexModel;
 		if (VERTEX_VIEW_HASH_MAP.isEmpty()) {
-			vertexModel = MODEL.setStartVertex();
+			vertexModel = MODEL.addStartVertex();
 		} else {
 			vertexModel = MODEL.addSymbol(symbolType);
 		}

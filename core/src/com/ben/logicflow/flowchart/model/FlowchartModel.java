@@ -7,6 +7,11 @@ public final class FlowchartModel {
 	private double variableX;
 	private double variableY;
 	private double variableZ;
+	public VertexModel addStartVertex() {
+		final VertexModel START_VERTEX = addSymbol(SymbolType.PROCESS);
+		startVertex = (ProcessModel) START_VERTEX;
+		return START_VERTEX;
+	}
 	public VertexModel addSymbol(SymbolType symbolType) {
 		VertexModel symbol = null;
 		switch (symbolType) {
@@ -42,11 +47,6 @@ public final class FlowchartModel {
 				return variableZ;
 		}
 		return 0;
-	}
-	public VertexModel setStartVertex() {
-		final VertexModel START_VERTEX = addSymbol(SymbolType.PROCESS);
-		startVertex = (ProcessModel) START_VERTEX;
-		return START_VERTEX;
 	}
 	public void setVariable(Variable variable, double value) {
 		switch (variable) {

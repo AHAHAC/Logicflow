@@ -14,9 +14,9 @@ public final class Assets {
 	private static final TextureRegion ARROW_HEAD = FLOWCHART_SYMBOLS.findRegion("arrow_head");
 	private Assets() {
 	}
-	public static void dispose() {
-		SKIN.dispose();
+	protected static void dispose() {
 		FLOWCHART_SYMBOLS.dispose();
+		SKIN.dispose();
 	}
 	public static Skin getSkin() {
 		return SKIN;

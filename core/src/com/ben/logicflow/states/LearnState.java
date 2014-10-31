@@ -1,5 +1,6 @@
 package com.ben.logicflow.states;
 
+import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -9,7 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.ben.logicflow.Application;
 import com.ben.logicflow.Assets;
 
-public final class LearnState extends State {
+public final class LearnState extends ScreenAdapter {
 	private static enum SubState {
 		ALGORITHMS, CONCEPTS, FLOWCHARTS
 	}
@@ -19,7 +20,7 @@ public final class LearnState extends State {
 	private static final Label INFORMATION_LABEL = new Label("", Assets.getSkin());
 	private static final Table INFORMATION_TABLE = new Table(Assets.getSkin());
 	private static final TextButton NEXT_BUTTON = new TextButton("", Assets.getSkin());
-	public static void initialise() {
+	protected static void initialise() {
 		TABLE.setVisible(false);
 		TABLE.setFillParent(true);
 		Application.addActor(TABLE);
@@ -40,7 +41,7 @@ public final class LearnState extends State {
 						currentSubState = SubState.FLOWCHARTS;
 						break;
 					case FLOWCHARTS:
-						StateManager.setMenuState();
+						StateManager.setState(State.MENU_STATE);
 						showAlgorithmInfo();
 						currentSubState = SubState.ALGORITHMS;
 				}
@@ -52,10 +53,6 @@ public final class LearnState extends State {
 	@Override
 	public void show() {
 		TABLE.setVisible(true);
-	}
-	@Override
-	public void hide() {
-		TABLE.setVisible(false);
 	}
 	private static void showAlgorithmInfo() {
 		INFORMATION_TABLE.clear();
@@ -72,7 +69,7 @@ public final class LearnState extends State {
 		INFORMATION_LABEL.setText("The order in which instructions are followed, the conditions which determine which instructions are followed and the number of times instructions are followed are all important in problem solving. These are called sequence, selection and repetition respectively and are commonly used in algorithms.");
 		INFORMATION_TABLE.add("Control Flow Statement").space(20);
 		INFORMATION_TABLE.add("Example").space(20);
-		INFORMATION_TABLE.add("Key Phrase").left().space(20).row();
+		INFORMATION_TABLE.add("Key Phrase").space(20).left().row();
 		INFORMATION_TABLE.add("Sequence").space(20);
 		INFORMATION_TABLE.add("Unscrew the broken light bulb and then replace it with a working one.").space(20).left();
 		INFORMATION_TABLE.add("\"and then\"").space(20).left().row();
@@ -99,5 +96,9 @@ public final class LearnState extends State {
 		INFORMATION_TABLE.add(new Image(Assets.getIO())).space(20);
 		INFORMATION_TABLE.add("Input/output").space(20);
 		NEXT_BUTTON.setText("Menu");
+	}
+	@Override
+	public void hide() {
+		TABLE.setVisible(false);
 	}
 }
