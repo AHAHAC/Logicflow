@@ -38,7 +38,7 @@ public final class Application extends ApplicationAdapter {
 		stage.act();
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		if (StateManager.getCurrentState() == State.PRACTICE_STATE) {
-			PracticeState.updateFlowchartEdges();
+			PracticeState.drawFlowchartEdges();
 		}
 		stage.draw();
 	}

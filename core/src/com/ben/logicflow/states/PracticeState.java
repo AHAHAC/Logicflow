@@ -18,7 +18,7 @@ public final class PracticeState extends FlowchartState {
 	public void show() {
 		FLOWCHART_CONTROLLER.setVisible(true);
 	}
-	public static void updateFlowchartEdges() {
+	public static void drawFlowchartEdges() {
 		FLOWCHART_CONTROLLER.drawEdges();
 	}
 	public static void executeFlowchart() {
