@@ -10,10 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField.TextFieldListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.DragListener;
-import com.ben.logicflow.flowchart.model.FlowchartModel;
-import com.ben.logicflow.flowchart.model.SymbolModel;
-import com.ben.logicflow.flowchart.model.ProcessModel;
-import com.ben.logicflow.flowchart.model.VertexModel;
+import com.ben.logicflow.flowchart.model.*;
 import com.ben.logicflow.flowchart.view.*;
 
 import java.util.HashMap;
@@ -27,6 +24,20 @@ public final class FlowchartController {
 	private OutputDialog outputDialog;
 	public void initialise() {
 		addSymbol(SymbolType.PROCESS, 450, 600);
+	}
+	public void checkStatus() {
+		switch (MODEL.getRequestType()) {
+			case INPUT:
+				if (inputDialog == null || ! inputDialog.isActive()) {
+					input(MODEL.getRequestVariable(), MODEL.getRequestVertex());
+				}
+				break;
+			case OUTPUT:
+				if (outputDialog == null || ! outputDialog.isActive()) {
+					output(MODEL.getRequestVariable(), MODEL.getRequestVertex());
+				}
+		}
+		MODEL.resetRequest();
 	}
 	public void drawEdges() {
 		EDGE_RENDERER.begin(ShapeRenderer.ShapeType.Line);
@@ -43,7 +54,7 @@ public final class FlowchartController {
 	private void drawEdge(Vector2 startPoint, Vector2 endPoint) {
 		/*
 		SymbolView currentSymbolView = (SymbolView) currentVertexModel.getView();
-		VertexView nextVertexView = currentVertexModel.getNextVertex().getView();
+		VertexView nextVertexView = currentVertexModel.getRequestVertex().getView();
 		final int MINIMUM_DISTANCE = 12;
 		if (currentSymbolView.getOutPoint().y - nextVertexView.getInPoint().y < 2 * MINIMUM_DISTANCE) {
 			EDGE_RENDERER.line(currentSymbolView.getOutPoint().x, currentSymbolView.getOutPoint().y, currentSymbolView.getOutPoint().x, currentSymbolView.getOutPoint().y - MINIMUM_DISTANCE);
@@ -69,6 +80,8 @@ public final class FlowchartController {
 				break;
 			case IO:
 				symbolView = new InputOutputView();
+				((InputOutputView) symbolView).getVariableSelectBox().addListener(new SelectBoxStateListener(symbolView, SymbolType.IO));
+				((InputOutputView) symbolView).getOperationSelectBox().addListener(new SelectBoxStateListener(symbolView, SymbolType.IO));
 		}
 		symbolView.setPosition(x, y);
 		symbolView.moved();
@@ -163,6 +176,10 @@ public final class FlowchartController {
 				case PROCESS:
 					((ProcessModel) VERTEX_VIEW_HASH_MAP.get(symbolView)).setVariable(((ProcessView) symbolView).getCurrentVariable());
 					((ProcessModel) VERTEX_VIEW_HASH_MAP.get(symbolView)).setOperation(((ProcessView) symbolView).getCurrentOperation());
+					break;
+				case IO:
+					((InputOutputModel) VERTEX_VIEW_HASH_MAP.get(symbolView)).setOperation(((InputOutputView) symbolView).getCurrentOperation());
+					((InputOutputModel) VERTEX_VIEW_HASH_MAP.get(symbolView)).setVariable(((InputOutputView) symbolView).getCurrentVariable());
 			}
 		}
 	}

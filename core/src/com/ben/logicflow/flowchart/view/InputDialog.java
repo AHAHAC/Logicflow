@@ -13,6 +13,7 @@ public final class InputDialog extends Dialog {
 	private FlowchartController flowchartController;
 	private Variable variable;
 	private VertexModel nextVertex;
+	private boolean active;
 	public InputDialog(FlowchartController flowchartController) {
 		super("INPUT", Assets.getSkin());
 		this.flowchartController = flowchartController;
@@ -26,6 +27,7 @@ public final class InputDialog extends Dialog {
 		this.variable = variable;
 		this.nextVertex = nextVertex;
 		show(Application.getStage());
+		active = true;
 	}
 	@Override
 	protected void result(Object object) {
@@ -33,8 +35,12 @@ public final class InputDialog extends Dialog {
 			flowchartController.setVariable(variable, Integer.parseInt(INPUT_FIELD.getText()));
 		} catch (NumberFormatException ignored) {
 		}
+		active = false;
 		if (nextVertex != null) {
 			flowchartController.execute(nextVertex);
 		}
+	}
+	public boolean isActive() {
+		return active;
 	}
 }

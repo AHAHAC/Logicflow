@@ -12,6 +12,7 @@ public final class OutputDialog extends Dialog {
 	private final Label OUTPUT_LABEL = new Label("", Assets.getSkin());
 	private FlowchartController flowchartController;
 	private VertexModel nextVertex;
+	private boolean active;
 	public OutputDialog(FlowchartController flowchartController) {
 		super("OUTPUT", Assets.getSkin());
 		this.flowchartController = flowchartController;
@@ -23,11 +24,16 @@ public final class OutputDialog extends Dialog {
 		OUTPUT_LABEL.setText(String.valueOf(flowchartController.getVariable(variable)));
 		this.nextVertex = nextVertex;
 		show(Application.getStage());
+		active = true;
 	}
 	@Override
 	protected void result(Object object) {
+		active = false;
 		if (nextVertex != null) {
 			flowchartController.execute(nextVertex);
 		}
+	}
+	public boolean isActive() {
+		return active;
 	}
 }

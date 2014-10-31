@@ -35,6 +35,9 @@ public final class Application extends ApplicationAdapter {
 	@Override
 	public void render() {
 		StateManager.update();
+		if (StateManager.getCurrentState() == State.PRACTICE_STATE) {
+			PracticeState.checkFlowchartStatus();
+		}
 		stage.act();
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		if (StateManager.getCurrentState() == State.PRACTICE_STATE) {
