@@ -16,8 +16,8 @@ public final class ProcessView extends SymbolView {
 		OPERATION_SELECT_BOX.setItems("=", "+=", "-=", "*=", "/=");
 		getTable().add(OPERATION_SELECT_BOX).space(10);
 		VALUE_TEXT_FIELD.setTextFieldFilter(new TextField.TextFieldFilter.DigitsOnlyFilter());
-		VALUE_TEXT_FIELD.setMaxLength(5);
-		getTable().add(VALUE_TEXT_FIELD).width(51).space(10);
+		VALUE_TEXT_FIELD.setMaxLength(7);
+		getTable().add(VALUE_TEXT_FIELD).width(69).space(10);
 	}
 	public SelectBox<String> getVariableSelectBox() {
 		return VARIABLE_SELECT_BOX;

@@ -11,6 +11,7 @@ public abstract class SymbolView extends VertexView {
 	private final Vector2 OUT_POINT = new Vector2();
 	public SymbolView(TextureRegion textureRegion) {
 		super(textureRegion);
+		getArrowHead().setRotation(270);
 		Application.addActor(TABLE);
 	}
 	@Override

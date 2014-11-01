@@ -14,15 +14,20 @@ public final class OutputDialog extends Dialog {
 	private VertexModel nextVertex;
 	private boolean active;
 	public OutputDialog(FlowchartController flowchartController) {
-		super("OUTPUT", Assets.getSkin());
+		super("", Assets.getSkin());
 		this.flowchartController = flowchartController;
 		setMovable(false);
 		getContentTable().add(OUTPUT_LABEL);
 		button("Ok");
 	}
-	public void output(Variable variable, VertexModel nextVertex) {
+	public void output(Variable variable, VertexModel nextVertex, String title) {
 		OUTPUT_LABEL.setText(String.valueOf(flowchartController.getVariable(variable)));
 		this.nextVertex = nextVertex;
+		if (title == null || title.equals("")) {
+			setTitle("INPUT");
+		} else {
+			setTitle(title);
+		}
 		show(Application.getStage());
 		active = true;
 	}

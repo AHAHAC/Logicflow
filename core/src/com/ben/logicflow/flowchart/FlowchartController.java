@@ -30,12 +30,12 @@ public final class FlowchartController {
 		switch (MODEL.getRequestType()) {
 			case INPUT:
 				if (inputDialog == null || ! inputDialog.isActive()) {
-					input(MODEL.getRequestVariable(), MODEL.getRequestVertex());
+					input(MODEL.getRequestVariable(), MODEL.getRequestVertex(), MODEL.getRequestTitle());
 				}
 				break;
 			case OUTPUT:
 				if (outputDialog == null || ! outputDialog.isActive()) {
-					output(MODEL.getRequestVariable(), MODEL.getRequestVertex());
+					output(MODEL.getRequestVariable(), MODEL.getRequestVertex(), MODEL.getRequestTitle());
 				}
 		}
 		MODEL.resetRequest();
@@ -79,6 +79,7 @@ public final class FlowchartController {
 				symbolView = new InputOutputView();
 				((InputOutputView) symbolView).getVariableSelectBox().addListener(new SelectBoxStateListener(symbolView, SymbolType.IO));
 				((InputOutputView) symbolView).getOperationSelectBox().addListener(new SelectBoxStateListener(symbolView, SymbolType.IO));
+				((InputOutputView) symbolView).getTitleTextField().setTextFieldListener(new TextFieldStateListener(symbolView, SymbolType.IO));
 		}
 		symbolView.setPosition(x, y);
 		symbolView.moved();
@@ -87,6 +88,7 @@ public final class FlowchartController {
 		if (VERTEX_VIEW_HASH_MAP.isEmpty()) {
 			vertexModel = MODEL.addStartVertex();
 		} else {
+			symbolView.setArrowHeadVisible(true);
 			vertexModel = MODEL.addSymbol(symbolType);
 		}
 		VERTEX_VIEW_HASH_MAP.put(symbolView, vertexModel);
@@ -98,13 +100,13 @@ public final class FlowchartController {
 	public void execute(VertexModel startVertex) {
 		MODEL.execute(startVertex);
 	}
-	public void input(Variable variable, VertexModel nextVertex) {
+	public void input(Variable variable, VertexModel nextVertex, String title) {
 		inputDialog = new InputDialog(this);
-		inputDialog.input(variable, nextVertex);
+		inputDialog.input(variable, nextVertex, title);
 	}
-	public void output(Variable variable, VertexModel nextVertex) {
+	public void output(Variable variable, VertexModel nextVertex, String title) {
 		outputDialog = new OutputDialog(this);
-		outputDialog.output(variable, nextVertex);
+		outputDialog.output(variable, nextVertex, title);
 	}
 	public double getVariable(Variable variable) {
 		return MODEL.getVariable(variable);
@@ -122,9 +124,11 @@ public final class FlowchartController {
 		if (! visible) {
 			if (outputDialog != null) {
 				outputDialog.hide(null);
+				outputDialog = null;
 			}
 			if (inputDialog != null) {
 				inputDialog.hide(null);
+				inputDialog = null;
 			}
 		}
 	}
@@ -197,6 +201,9 @@ public final class FlowchartController {
 					} catch (NumberFormatException e) {
 						((ProcessModel) VERTEX_VIEW_HASH_MAP.get(symbolView)).setActive(false);
 					}
+					break;
+				case IO:
+					((InputOutputModel) VERTEX_VIEW_HASH_MAP.get(symbolView)).setTitle(((InputOutputView) symbolView).getCurrentTitle());
 			}
 		}
 	}

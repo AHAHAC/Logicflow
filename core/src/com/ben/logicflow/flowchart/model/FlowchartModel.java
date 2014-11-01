@@ -10,6 +10,7 @@ public final class FlowchartModel {
 	private RequestType requestType = RequestType.NONE;
 	private Variable requestVariable;
 	private VertexModel requestVertex;
+	private String requestTitle = "";
 	public VertexModel addStartVertex() {
 		final VertexModel START_VERTEX = addSymbol(SymbolType.PROCESS);
 		startVertex = (ProcessModel) START_VERTEX;
@@ -75,6 +76,9 @@ public final class FlowchartModel {
 	public VertexModel getRequestVertex() {
 		return requestVertex;
 	}
+	public String getRequestTitle() {
+		return requestTitle;
+	}
 	public void setVariable(Variable variable, double value) {
 		switch (variable) {
 			case X:
@@ -95,5 +99,8 @@ public final class FlowchartModel {
 	}
 	public void setRequestVertex(VertexModel requestVertex) {
 		this.requestVertex = requestVertex;
+	}
+	public void setRequestTitle(String requestTitle) {
+		this.requestTitle = requestTitle;
 	}
 }

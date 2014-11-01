@@ -15,17 +15,22 @@ public final class InputDialog extends Dialog {
 	private VertexModel nextVertex;
 	private boolean active;
 	public InputDialog(FlowchartController flowchartController) {
-		super("INPUT", Assets.getSkin());
+		super("", Assets.getSkin());
 		this.flowchartController = flowchartController;
 		setMovable(false);
 		INPUT_FIELD.setTextFieldFilter(new TextField.TextFieldFilter.DigitsOnlyFilter());
-		INPUT_FIELD.setMaxLength(5);
-		getContentTable().add(INPUT_FIELD).width(51);
+		INPUT_FIELD.setMaxLength(7);
+		getContentTable().add(INPUT_FIELD).width(69);
 		button("Ok");
 	}
-	public void input(Variable variable, VertexModel nextVertex) {
+	public void input(Variable variable, VertexModel nextVertex, String title) {
 		this.variable = variable;
 		this.nextVertex = nextVertex;
+		if (title == null || title.equals("")) {
+			setTitle("INPUT");
+		} else {
+			setTitle(title);
+		}
 		show(Application.getStage());
 		active = true;
 	}
