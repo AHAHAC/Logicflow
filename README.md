@@ -14,6 +14,8 @@ TODO (November):
 
 TODO (December):
 
+	Implement loop points
+
 	Implement flowchart validation
 
 	Implement flowchart saving
