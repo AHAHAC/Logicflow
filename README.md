@@ -10,4 +10,4 @@ TODO (November):
 TODO (December):
 	-Implement flowchart validation
 	-Implement flowchart saving
-	-Implement TestState
+	-Implement TestStat
