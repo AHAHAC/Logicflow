@@ -4,18 +4,18 @@ Candidate Number: 1545
 
 TODO (November):
 
-	-Fix InputDialog TextField bug
+	Fix InputDialog TextField bug
 
-	-Implement FlowchartState
+	Implement FlowchartState
 
-	-Implement DecisionModel/View + depth-first search egde rendering
+	Implement DecisionModel/View + depth-first search egde rendering
 
-	-Implement user-flowchart interaction
+	Implement user-flowchart interaction
 
 TODO (December):
 
-	-Implement flowchart validation
+	Implement flowchart validation
 
-	-Implement flowchart saving
+	Implement flowchart saving
 
-	-Implement TestState
+	Implement TestState
