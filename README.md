@@ -4,7 +4,6 @@ Candidate Number: 1545
 TODO (November):
 
 	-Fix InputDialog TextField bug
-
 	-Implement FlowchartState
 
 	-Implement DecisionModel/View + depth-first search egde rendering
